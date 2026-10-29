@@ -1,0 +1,38 @@
+<div class="navbar--container sticky">
+  <div class="navbar--title">
+    <h4>CALABRIA</h4>
+  </div>
+
+  <button
+    class="navbar--icon"
+    type="button"
+    aria-label="Ouvrir le menu"
+    [attr.aria-expanded]="menuOpen"
+    (click)="openMenu()">
+    ☰
+  </button>
+</div>
+
+<nav
+  class="nav--open sticky"
+  [class.close]="!menuOpen"
+  [attr.aria-hidden]="!menuOpen">
+
+  <div class="nav--open-icon">
+    <button
+      type="button"
+      aria-label="Fermer le menu"
+      (click)="closeMenu()">
+      ×
+    </button>
+  </div>
+
+  <div class="nav--open-title">Explore</div>
+
+  <div class="nav--open-menu">
+    <a routerLink="/" (click)="closeMenu()">Accueil</a>
+    <a routerLink="/plats" (click)="closeMenu()">Plats</a>
+    <a routerLink="/services" (click)="closeMenu()">À propos de nous</a>
+    <a routerLink="/contact" (click)="closeMenu()">Contact</a>
+  </div>
+</nav>

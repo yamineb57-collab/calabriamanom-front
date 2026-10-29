@@ -1,0 +1,48 @@
+<footer class="site-footer">
+  <div class="site-footer__main">
+    <a class="site-footer__brand" routerLink="/" aria-label="Accueil Calabria">
+      <span class="site-footer__logo">C</span>
+      <span class="site-footer__brand-text">
+        <strong>CALABRIA</strong>
+        <small>PIZZERIA · MANOM</small>
+      </span>
+    </a>
+
+    <p class="site-footer__message">
+      Un goût d’Italie,<br />
+      <em>un plaisir à partager.</em>
+    </p>
+
+    <div class="site-footer__contact">
+      <span class="site-footer__label">NOUS RENDRE VISITE</span>
+      <a
+        href="https://www.google.com/maps/search/?api=1&query=2bis+rue+des+jardins+57100+Manom"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        2 bis rue des Jardins<br />
+        57100 Manom
+        <span aria-hidden="true">↗</span>
+      </a>
+      <a href="tel:+33382585858">03 82 58 58 58</a>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <span class="site-footer__copyright">
+      © {{ currentYear }} Pizzeria Calabria
+    </span>
+
+    <nav class="site-footer__legal" aria-label="Liens légaux">
+      <a routerLink="/mentions-legales">Mentions légales</a>
+      <a routerLink="/politique-confidentialite">
+        Politique de confidentialité
+      </a>
+      <a routerLink="/gestion-cookies">Gestion des cookies</a>
+    </nav>
+
+    <a class="site-footer__back-top" href="#top">
+      Retour en haut ↑
+    </a>
+  </div>
+</footer>
