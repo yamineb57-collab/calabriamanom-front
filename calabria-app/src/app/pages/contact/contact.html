@@ -1,0 +1,343 @@
+<main class="contact-page">
+
+  <!-- Introduction -->
+  <header class="contact-intro">
+    <span class="section-label">
+      PIZZERIA CALABRIA · MANOM
+    </span>
+
+    <h1>Nous <em>contacter</em></h1>
+
+    <p>
+      Une question, une commande ou envie de nous rendre visite ?
+      Nous serons ravis de vous accueillir.
+    </p>
+  </header>
+
+
+  <!-- Informations pratiques -->
+  <section class="contact-infos">
+
+    <!-- Coordonnées -->
+    <article class="contact-card contact-location">
+
+      <div class="contact-card__heading">
+        <span class="contact-card__number">01</span>
+        <div>
+          <h2>Nous trouver</h2>
+          <p>Retrouvez-nous à Manom.</p>
+        </div>
+      </div>
+
+      <div class="location-details">
+
+        <div class="contact-detail">
+          <span class="contact-detail__icon">
+            <i class="icon-placeholder"></i>
+          </span>
+
+          <div>
+            <strong>Notre adresse</strong>
+            <p>
+              2 bis rue des Jardins<br>
+              57100 Manom, France
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div>
+            <strong>Téléphone</strong>
+            <a [href]="'tel:' + telephoneInternational">
+              03 82 58 58 58
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="contact-map">
+        <iframe
+          src="https://www.google.com/maps?q=2%20bis%20rue%20des%20jardins%2057100%20Manom%20France&output=embed"
+          width="100%"
+          height="300"
+          style="border: 0;"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation de la Pizzeria Calabria">
+        </iframe>
+      </div>
+
+      <a
+        class="contact-directions"
+        href="https://www.google.com/maps/search/?api=1&query=2+bis+rue+des+jardins+57100+Manom+France"
+        target="_blank"
+        rel="noopener noreferrer">
+        Voir l'itinéraire
+        <span>↗</span>
+      </a>
+
+    </article>
+
+
+    <!-- Horaires -->
+    <article class="contact-card contact-hours">
+
+      <div class="contact-card__heading">
+        <span class="contact-card__number">02</span>
+        <div>
+          <h2>Nos horaires</h2>
+          <p>Nous vous accueillons toute la semaine.</p>
+        </div>
+      </div>
+
+      <div class="hours-table">
+
+        <div class="hours-row hours-row--header">
+          <span>Jour</span>
+          <span>Midi</span>
+          <span>Soir</span>
+        </div>
+
+        <div
+          class="hours-row"
+          *ngFor="let horaire of horaires">
+
+          <strong>{{ horaire.jour }}</strong>
+          <span>{{ horaire.midi }}</span>
+          <span>{{ horaire.soir }}</span>
+
+        </div>
+
+      </div>
+
+      <div class="hours-note">
+        <span>À noter</span>
+        <p>
+          Les horaires sont susceptibles d'être modifiés.
+          N'hésitez pas à nous appeler pour toute question.
+        </p>
+      </div>
+
+    </article>
+
+  </section>
+
+
+  <!-- Commandes -->
+  <section class="contact-order">
+
+    <div class="contact-order__intro">
+      <span class="section-label">À VOUS DE CHOISIR</span>
+      <h2>Comment souhaitez-vous profiter de Calabria ?</h2>
+      <p>
+        Retrouvez nos spécialités chez vous ou venez directement
+        récupérer votre commande au restaurant.
+      </p>
+    </div>
+
+    <div class="order-options">
+
+      <article class="order-option">
+        <div class="order-option__icon">
+          <span>01</span>
+        </div>
+
+        <h3>Livraison à domicile</h3>
+
+        <p>
+          Profitez de nos pizzas et spécialités directement
+          chez vous grâce à notre service de livraison.
+        </p>
+
+        <a [href]="'tel:' + telephoneInternational">
+          Commander par téléphone
+          <span>↗</span>
+        </a>
+      </article>
+
+
+      <article class="order-option">
+        <div class="order-option__icon">
+          <span>02</span>
+        </div>
+
+        <h3>À emporter</h3>
+
+        <p>
+          Passez votre commande par téléphone et venez
+          la récupérer directement à la pizzeria.
+        </p>
+
+        <a [href]="'tel:' + telephoneInternational">
+          Commander par téléphone
+          <span>↗</span>
+        </a>
+      </article>
+
+    </div>
+
+    <div class="contact-order__phone">
+      <span>Pour commander</span>
+
+      <a [href]="'tel:' + telephoneInternational">
+        03 82 58 58 58
+      </a>
+    </div>
+
+  </section>
+
+
+  <!-- Formulaire de contact -->
+  <section class="contact-form-section">
+
+    <div class="contact-form-intro">
+      <span class="section-label">RESTONS EN CONTACT</span>
+
+      <h2>Une question ? <em>Écrivez-nous.</em></h2>
+
+      <p>
+        Besoin d'un renseignement ? Utilisez le formulaire ci-dessous
+        pour nous laisser un message.
+      </p>
+    </div>
+
+
+    <form
+      class="contact-form"
+      #form="ngForm"
+      (ngSubmit)="onSubmit()">
+
+      <div class="form-grid">
+
+        <!-- Nom -->
+        <div class="form-field">
+          <label for="nom">Nom et prénom *</label>
+
+          <input
+            type="text"
+            id="nom"
+            name="nom"
+            [(ngModel)]="contactForm.nom"
+            placeholder="Votre nom"
+            required
+            minlength="2">
+        </div>
+
+
+        <!-- Email -->
+        <div class="form-field">
+          <label for="email">Adresse e-mail *</label>
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="contactForm.email"
+            placeholder="exemple@email.com"
+            required
+            email>
+        </div>
+
+
+        <!-- Téléphone -->
+        <div class="form-field">
+          <label for="telephone">Numéro de téléphone</label>
+
+          <input
+            type="tel"
+            id="telephone"
+            name="telephone"
+            [(ngModel)]="contactForm.telephone"
+            placeholder="06 00 00 00 00">
+        </div>
+
+
+        <!-- Objet -->
+        <div class="form-field">
+          <label for="objet">Objet *</label>
+
+          <select
+            id="objet"
+            name="objet"
+            [(ngModel)]="contactForm.objet"
+            required>
+
+            <option value="" disabled selected>
+              Choisir un objet
+            </option>
+
+            <option value="Question générale">
+              Question générale
+            </option>
+
+            <option value="Commande">
+              Commande
+            </option>
+
+            <option value="Livraison">
+              Livraison
+            </option>
+
+            <option value="Autre demande">
+              Autre demande
+            </option>
+
+          </select>
+        </div>
+
+
+        <!-- Message -->
+        <div class="form-field form-field--full">
+          <label for="message">Votre message *</label>
+
+          <textarea
+            id="message"
+            name="message"
+            [(ngModel)]="contactForm.message"
+            placeholder="Écrivez votre message ici..."
+            rows="6"
+            required
+            minlength="10">
+          </textarea>
+        </div>
+
+      </div>
+
+
+      <div class="form-footer">
+
+        <p class="form-required">
+          * Champs obligatoires
+        </p>
+
+        <button
+          type="submit"
+          class="button button--primary"
+          [disabled]="form.invalid">
+
+          Envoyer le message
+          <span>→</span>
+
+        </button>
+
+      </div>
+
+      <p
+        class="form-feedback"
+        *ngIf="messageInfo"
+        role="status">
+        {{ messageInfo }}
+      </p>
+
+      <p class="form-notice">
+        L'envoi de ce formulaire sera prochainement disponible.
+        Pour toute demande urgente, contactez-nous par téléphone.
+      </p>
+
+    </form>
+
+  </section>
+
+</main>
