@@ -1,0 +1,162 @@
+<main class="menu-page">
+
+  <!-- Introduction -->
+  <header class="menu-intro">
+    <span class="section-label">
+      PIZZERIA CALABRIA · MANOM
+    </span>
+
+    <h1>Notre <em>carte</em></h1>
+
+    <p>
+      De bonnes choses, simplement.
+      Découvrez nos spécialités et trouvez votre bonheur.
+    </p>
+  </header>
+
+  <!-- Chargement -->
+  <div class="menu-status" *ngIf="loading()" role="status">
+    <span class="menu-loader"></span>
+    <p>Préparation de notre carte...</p>
+  </div>
+
+  <!-- Erreur -->
+  <div
+    class="menu-error"
+    *ngIf="!loading() && errorMessage"
+    role="alert"
+  >
+    <p>{{ errorMessage }}</p>
+
+    <button class="button button--primary" (click)="loadPlats()">
+      Réessayer
+    </button>
+  </div>
+
+  <!-- Carte -->
+  <ng-container *ngIf="!loading() && !errorMessage">
+
+    <div class="menu-empty" *ngIf="plats().length === 0">
+      <h2>Notre carte se prépare.</h2>
+      <p>Nos plats seront bientôt disponibles ici.</p>
+    </div>
+
+    <ng-container *ngIf="plats().length > 0">
+
+      <!-- Raccourcis des catégories -->
+      <nav class="menu-categories" aria-label="Catégories du menu">
+
+        <button
+          type="button"
+          *ngFor="let categorie of categories; trackBy: trackByCategory"
+          (click)="scrollToCategory(categorie.type)"
+        >
+          {{ categorie.label }}
+
+          <span>{{ categorie.plats.length }}</span>
+        </button>
+
+      </nav>
+
+      <!-- Catégories -->
+      <div class="menu-sections">
+
+        <section
+          *ngFor="let categorie of categories; trackBy: trackByCategory"
+          class="menu-category"
+          [id]="getCategoryId(categorie.type)"
+        >
+
+          <!-- En-tête catégorie -->
+          <header class="menu-category__header">
+
+            <div>
+              <h2>{{ categorie.label }}</h2>
+              <p>{{ categorie.description }}</p>
+            </div>
+
+            <button
+              type="button"
+              class="menu-category__top"
+              (click)="scrollToTop()"
+              aria-label="Retour en haut"
+            >
+              ↑
+            </button>
+
+          </header>
+
+          <!-- Plats -->
+          <div class="dish-list">
+
+            <article
+              class="dish-card"
+              *ngFor="
+                let plat of categorie.plats;
+                trackBy: trackByPlatId
+              "
+              [class.dish-card--unavailable]="!plat.disponible"
+            >
+
+              <div class="dish-card__content">
+
+                <div class="dish-card__title-row">
+
+                  <h3>{{ plat.name }}</h3>
+
+                  <span
+                    *ngIf="!plat.disponible"
+                    class="dish-card__badge"
+                  >
+                    Indisponible
+                  </span>
+
+                </div>
+
+                <p
+                  class="dish-card__description"
+                  *ngIf="plat.description"
+                >
+                  {{ plat.description }}
+                </p>
+
+              </div>
+
+              <!-- Prix -->
+              <div class="dish-card__prices">
+
+                <div
+                  class="dish-price"
+                  *ngIf="plat.prix != null"
+                >
+                  <span class="dish-price__label">
+                    Classique (1/2 personnes)
+                  </span>
+
+                  <strong>
+                    {{ plat.prix | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+                  </strong>
+                </div>
+
+                <div
+                  class="dish-price dish-price--family"
+                  *ngIf="plat.prixFamilial != null"
+                >
+                  <span class="dish-price__label">
+                    Familial (4 personnes)
+                  </span>
+
+                  <strong>
+                    {{ plat.prixFamilial | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+                  </strong>
+                </div>
+
+              </div>
+
+            </article>
+          </div>
+        </section>
+      </div>
+    </ng-container>
+  </ng-container>
+</main>

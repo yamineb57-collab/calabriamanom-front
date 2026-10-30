@@ -1,9 +1,11 @@
-import { TypePlat } from './type-plat';
-
 export interface Plat {
   id: number;
   name: string;
   description: string;
-  imageURL: string;
-  type: TypePlat;
+  imageUrl?: string;
+  type: string;
+  prix: number;
+  prixFamilial?: number | null;
+  disponible: boolean;
+  ordre?: number | null;
 }
