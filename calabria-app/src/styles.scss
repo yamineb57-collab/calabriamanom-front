@@ -2,6 +2,9 @@
 /* ==============================
    Design system — Calabria
    ============================== */
+main {
+  padding-top: 0;
+}
 
 :root {
   --color-primary: #b92f24;
@@ -148,6 +151,14 @@ a {
       color: var(--color-primary);
     }
   }
+}
+
+.pizza {
+  color: var(--color-green);
+}
+
+.calabria {
+  color: var(--color-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {

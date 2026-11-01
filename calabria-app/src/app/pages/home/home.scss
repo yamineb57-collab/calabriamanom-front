@@ -13,7 +13,10 @@
   padding: clamp(40px, 6vw, 90px) 8%;
   overflow: hidden;
   background: var(--color-cream);
+  padding-top: 50px;
 }
+
+/* Contenu */
 
 .home-hero__content {
   position: relative;
@@ -21,11 +24,13 @@
   animation: hero-content-enter 0.9s ease-out both;
 }
 
+/* Petit surtitre */
+
 .home-hero__eyebrow {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--color-primary);
+  color: var(--color-green);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -37,19 +42,60 @@
   background: currentColor;
 }
 
+/* Identité Pizza Calabria */
+
+.home-hero__brand {
+  margin-top: 35px;
+  margin-bottom: 28px;
+}
+
+.home-hero__brand-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.13em;
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(3.7rem, 6.5vw, 6.4rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+}
+
+.home-hero__pizza {
+  color: var(--color-green);
+}
+
+.home-hero__calabria {
+  color: var(--color-primary);
+}
+
+.home-hero__brand-subtitle {
+  display: block;
+  margin-top: 17px;
+  color: var(--color-muted);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.23em;
+}
+
+/* Titre secondaire */
+
 .home-hero__title {
-  margin: 28px 0 22px;
+  margin: 0 0 20px;
   font-family: var(--font-heading);
-  font-size: clamp(2.8rem, 5vw, 5.2rem);
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
   font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.045em;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
 
   em {
     color: var(--color-primary);
     font-weight: 400;
   }
 }
+
+/* Description */
 
 .home-hero__description {
   max-width: 410px;
@@ -59,12 +105,16 @@
   line-height: 1.9;
 }
 
+/* Boutons */
+
 .home-hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
   margin-top: 32px;
 }
+
+/* Localisation */
 
 .home-hero__location {
   display: flex;
@@ -75,10 +125,12 @@
   font-size: 0.8rem;
 
   span {
-    color: var(--color-primary);
-    font-size: 1.2rem;
+    color: var(--color-green);
+    font-size: 1.3rem;
   }
 }
+
+/* Visuel */
 
 .home-hero__visual {
   position: relative;
@@ -104,6 +156,8 @@
   animation: pizza-image-reveal 1.5s ease-out both;
 }
 
+/* Légende photo */
+
 .home-hero__image-caption {
   position: absolute;
   right: 25px;
@@ -127,6 +181,8 @@
   }
 }
 
+/* Badge */
+
 .home-hero__badge {
   position: absolute;
   top: 9%;
@@ -141,7 +197,7 @@
   border: 1px solid rgb(255 255 255 / 70%);
   border-radius: 50%;
   outline: 5px solid var(--color-cream);
-  background: var(--color-primary);
+  background: var(--color-green);
   color: white;
   transform: rotate(10deg);
 
@@ -157,12 +213,14 @@
   }
 }
 
+/* Texte décoratif en arrière-plan */
+
 .home-hero__background-word {
   position: absolute;
   z-index: -1;
   bottom: -0.12em;
   left: 2%;
-  color: rgb(37 36 31 / 3%);
+  color: rgb(0 140 112 / 4%);
   font-family: var(--font-heading);
   font-size: clamp(7rem, 18vw, 18rem);
   font-weight: 700;
@@ -170,6 +228,8 @@
   pointer-events: none;
   user-select: none;
 }
+
+/* Animations */
 
 @keyframes hero-content-enter {
   from {
@@ -205,7 +265,9 @@
   }
 }
 
-@media (max-width: 900px) {
+/* Responsive tablette */
+
+@media (max-width: 1100px) {
   .home-hero {
     grid-template-columns: 1fr 0.85fr;
     gap: 30px;
@@ -213,8 +275,8 @@
     padding-left: 6%;
   }
 
-  .home-hero__title {
-    font-size: clamp(2.5rem, 5.5vw, 4rem);
+  .home-hero__brand-title {
+    font-size: clamp(3.3rem, 6vw, 5rem);
   }
 
   .home-hero__visual {
@@ -228,16 +290,25 @@
   }
 }
 
-@media (max-width: 640px) {
+/* Responsive mobile */
+
+@media (max-width: 700px) {
   .home-hero {
     grid-template-columns: 1fr;
     gap: 35px;
     padding: 50px 6% 60px;
   }
 
+  .home-hero__brand {
+    margin-top: 28px;
+  }
+
+  .home-hero__brand-title {
+    font-size: clamp(3.4rem, 11vw, 5rem);
+  }
+
   .home-hero__title {
-    margin-top: 22px;
-    font-size: clamp(2.7rem, 10vw, 4rem);
+    font-size: clamp(2rem, 8vw, 3rem);
   }
 
   .home-hero__description {
@@ -263,6 +334,8 @@
     font-size: 30vw;
   }
 }
+
+/* Accessibilité */
 
 @media (prefers-reduced-motion: reduce) {
   .home-hero__content,
