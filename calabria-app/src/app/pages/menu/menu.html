@@ -125,7 +125,7 @@
 
               <!-- Prix -->
               <div class="dish-card__prices">
-
+                <div *ngIf="plat.type == 'PIZZA'">
                 <div
                   class="dish-price"
                   *ngIf="plat.prix != null"
@@ -151,7 +151,20 @@
                     {{ plat.prixFamilial | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
                   </strong>
                 </div>
-
+                </div>
+                <div *ngIf="plat.type != 'PIZZA'">
+                    <div
+                      class="dish-price"
+                      *ngIf="plat.prix != null"
+                    >
+                  <span class="dish-price__label">
+                    Prix
+                  </span>
+                      <strong>
+                        {{ plat.prix | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+                      </strong>
+                    </div>
+                </div>
               </div>
 
             </article>
