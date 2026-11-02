@@ -75,6 +75,11 @@ export class Menu implements OnInit {
       type: 'BOISSON',
       label: 'Nos boissons',
       description: 'Pour accompagner votre repas.'
+    },
+    {
+      type: 'SUPPLEMENTS',
+      label: 'Suppléments',
+      description: ''
     }
   ];
 

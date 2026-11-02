@@ -125,7 +125,7 @@
 
               <!-- Prix -->
               <div class="dish-card__prices">
-                <div *ngIf="plat.type == 'PIZZA'">
+                <div *ngIf="plat.type == 'PIZZA' || plat.type == 'SUPPLEMENTS'">
                 <div
                   class="dish-price"
                   *ngIf="plat.prix != null"
@@ -152,7 +152,7 @@
                   </strong>
                 </div>
                 </div>
-                <div *ngIf="plat.type != 'PIZZA'">
+                <div *ngIf="plat.type != 'PIZZA' && plat.type != 'SUPPLEMENTS'">
                     <div
                       class="dish-price"
                       *ngIf="plat.prix != null"
