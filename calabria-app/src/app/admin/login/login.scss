@@ -1,0 +1,150 @@
+:host {
+  display: block;
+}
+
+.login-page {
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background: var(--color-cream);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: clamp(30px, 5vw, 50px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.login-brand {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+
+  .pizza {
+    color: var(--color-green);
+  }
+
+  .calabria {
+    color: var(--color-primary);
+  }
+}
+
+.login-eyebrow {
+  display: block;
+  margin-top: 26px;
+  color: var(--color-green);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+h1 {
+  margin: 12px 0;
+  font-family: var(--font-heading);
+  font-size: 2.3rem;
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+.login-description {
+  margin-bottom: 35px;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.form-group {
+  margin-bottom: 22px;
+  text-align: left;
+
+  label {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--color-ink);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: var(--color-green);
+    }
+  }
+}
+
+.password-field {
+  position: relative;
+
+  input {
+    padding-right: 90px;
+  }
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: var(--color-green);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.login-submit {
+  width: 100%;
+  margin-top: 10px;
+  padding: 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.error-message {
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.login-footer {
+  margin-top: 35px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.72rem;
+}

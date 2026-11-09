@@ -1,30 +1,32 @@
-import { Component, signal } from '@angular/core';
-import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 import {Navbar} from './pages/navbar/navbar';
 import {Footer} from './pages/footer/footer';
-import {filter} from 'rxjs';
+import {CommonModule} from '@angular/common';
 
 @Component({
-  imports: [RouterOutlet, Navbar, Footer],
   selector: 'app-root',
-  styleUrl: './app.css',
+  standalone: true,
+  imports: [RouterOutlet, Navbar, Footer, CommonModule],
   templateUrl: './app.html',
+  styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('calabria-app');
 
-  constructor(private router: Router) {
+  private router = inject(Router);
+
+  showPublicLayout = true;
+
+  constructor() {
+    this.updateLayout();
+
     this.router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd)
-      )
-      .subscribe(() => {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'instant'
-        });
-      });
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => this.updateLayout());
+  }
 
+  private updateLayout(): void {
+    this.showPublicLayout = !this.router.url.startsWith('/admin');
   }
 }

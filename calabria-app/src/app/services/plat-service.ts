@@ -7,7 +7,7 @@ import {Plat} from '../models/plat';
   providedIn: 'root'
 })
 export class PlatService {
-  private apiUrl = 'http://localhost:8080/api/plats';
+  private readonly apiUrl = '/api/plats';
 
   constructor(private http: HttpClient) {}
 
@@ -24,14 +24,20 @@ export class PlatService {
   }
 
   create(plat: Plat): Observable<any> {
-    return this.http.post<Plat>(this.apiUrl, plat);
+    return this.http.post<Plat>(this.apiUrl, plat, {
+      withCredentials: true
+    });
   }
 
   update(id: number, plat: Plat): Observable<any> {
-    return this.http.put<Plat>(`${this.apiUrl}/${id}`, plat);
+    return this.http.put<Plat>(`${this.apiUrl}/${id}`, plat, {
+      withCredentials: true
+    });
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
+      withCredentials: true
+    });
   }
 }

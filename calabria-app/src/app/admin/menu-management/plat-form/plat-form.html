@@ -1,0 +1,169 @@
+<div class="modal-overlay" (click)="close()">
+  <section
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="modal-header">
+      <div>
+        <span class="eyebrow">GESTION DE LA CARTE</span>
+        <h2 id="modal-title">
+          {{ plat ? 'Modifier le plat' : 'Ajouter un plat' }}
+        </h2>
+        <p>
+          {{ plat
+          ? 'Modifie les informations de ce plat.'
+          : 'Renseigne les informations du nouveau plat.' }}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="close-button"
+        aria-label="Fermer"
+        (click)="close()"
+      >
+        &times;
+      </button>
+    </header>
+
+    <form (ngSubmit)="onSubmit()" #platForm="ngForm">
+
+      <div class="form-content">
+
+        <div class="form-group">
+          <label for="name">Nom du plat <span>*</span></label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            [(ngModel)]="form.name"
+            placeholder="Ex. Pizza Regina"
+            required
+            maxlength="100"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            [(ngModel)]="form.description"
+            placeholder="Décris les ingrédients ou les particularités du plat..."
+            rows="3"
+            maxlength="500"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="type">Catégorie <span>*</span></label>
+          <select
+            id="type"
+            name="type"
+            [(ngModel)]="form.type"
+            (ngModelChange)="onCategoryChange()"
+            required
+          >
+            <option
+              *ngFor="let category of categories"
+              [value]="category.value"
+            >
+              {{ category.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prix">Prix (€) <span>*</span></label>
+            <input
+              id="prix"
+              type="number"
+              name="prix"
+              [(ngModel)]="form.prix"
+              placeholder="Ex. 12.50"
+              min="0"
+              step="0.01"
+              required
+            />
+          </div>
+
+          <div class="form-group" *ngIf="isPizza">
+            <label for="prixFamilial">Prix familial (€)</label>
+            <input
+              id="prixFamilial"
+              type="number"
+              name="prixFamilial"
+              [(ngModel)]="form.prixFamilial"
+              placeholder="Ex. 18.00"
+              min="0"
+              step="0.01"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ordre">Ordre d'affichage</label>
+          <input
+            id="ordre"
+            type="number"
+            name="ordre"
+            [(ngModel)]="form.ordre"
+            placeholder="Ex. 1"
+            min="0"
+            step="1"
+          />
+          <small>Permet de définir la position du plat dans sa catégorie.</small>
+        </div>
+
+        <div class="availability-field">
+          <div>
+            <strong>Disponibilité</strong>
+            <p>Le plat est-il actuellement proposé à la vente ?</p>
+          </div>
+
+          <label class="switch">
+            <input
+              type="checkbox"
+              name="disponible"
+              [(ngModel)]="form.disponible"
+            />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage()">
+          <span>!</span>
+          {{ errorMessage() }}
+        </div>
+
+      </div>
+
+      <footer class="modal-footer">
+        <button
+          type="button"
+          class="btn-cancel"
+          (click)="close()"
+          [disabled]="saving()"
+        >
+          Annuler
+        </button>
+
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="saving() || platForm.invalid"
+        >
+          <span *ngIf="!saving()">
+            {{ plat ? 'Enregistrer les modifications' : 'Ajouter le plat' }}
+          </span>
+          <span *ngIf="saving()">Enregistrement...</span>
+        </button>
+      </footer>
+
+    </form>
+  </section>
+</div>

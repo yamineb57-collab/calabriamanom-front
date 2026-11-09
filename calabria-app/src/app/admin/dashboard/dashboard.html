@@ -1,0 +1,297 @@
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+
+    <div class="sidebar-brand">
+      <div class="brand-name">
+        <span class="pizza">Pizza</span>
+        <span class="calabria">Calabria</span>
+      </div>
+      <span class="brand-subtitle">ESPACE ADMINISTRATION</span>
+    </div>
+
+    <div class="sidebar-section-label">
+      MENU PRINCIPAL
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <a
+        routerLink="/admin/dashboard"
+        routerLinkActive="active"
+        class="sidebar-link"
+      >
+        <span class="sidebar-icon">⌂</span>
+        <span>Vue d'ensemble</span>
+      </a>
+
+      <a
+        routerLink="/admin/carte"
+        class="sidebar-link"
+      >
+        <span class="sidebar-icon">▤</span>
+        <span>Ma carte</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <a routerLink="/plats" target="_blank" class="sidebar-link">
+        <span class="sidebar-icon">↗</span>
+        <span>Voir le site</span>
+      </a>
+
+      <button
+        type="button"
+        class="sidebar-link logout-link"
+        (click)="logout()"
+        [disabled]="logoutLoading()"
+      >
+        <span class="sidebar-icon">⇥</span>
+        <span>
+          {{ logoutLoading() ? 'Déconnexion...' : 'Déconnexion' }}
+        </span>
+      </button>
+
+      <div class="sidebar-user">
+        <div class="user-avatar">
+          {{ username().charAt(0).toUpperCase() }}
+        </div>
+
+        <div class="user-info">
+          <strong>{{ username() }}</strong>
+          <span>Administrateur</span>
+        </div>
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="admin-main">
+
+    <header class="admin-header">
+      <div>
+        <span class="header-eyebrow">PIZZERIA CALABRIA · MANOM</span>
+        <h1>Vue d'ensemble</h1>
+      </div>
+
+      <a routerLink="/plats" target="_blank" class="view-site-button">
+        Voir le site
+        <span>↗</span>
+      </a>
+    </header>
+
+
+    <section class="welcome-section">
+      <div>
+        <span class="welcome-label">BIENVENUE DANS VOTRE ESPACE</span>
+        <h2>Bonjour {{ username() }} <span>!</span></h2>
+        <p>
+          Retrouvez ici toutes les informations essentielles
+          pour gérer votre restaurant.
+        </p>
+      </div>
+
+      <div class="welcome-decoration" aria-hidden="true">
+        <span>BUON</span>
+        <strong>APPETITO</strong>
+      </div>
+    </section>
+
+
+    <!-- ERREUR -->
+    <div *ngIf="errorMessage()" class="error-message" role="alert">
+      {{ errorMessage() }}
+
+      <button type="button" (click)="loadPlats()">
+        Réessayer
+      </button>
+    </div>
+
+
+    <!-- INDICATEURS -->
+    <section class="stats-section">
+
+      <div class="section-heading">
+        <div>
+          <span class="section-eyebrow">VOTRE ACTIVITÉ</span>
+          <h2>En quelques chiffres</h2>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon stat-icon--red">▤</span>
+            <span class="stat-caption">CARTE</span>
+          </div>
+
+          <div class="stat-value">
+            <span *ngIf="!loading()">{{ totalPlats }}</span>
+            <span *ngIf="loading()" class="skeleton">—</span>
+          </div>
+
+          <div class="stat-description">
+            Plats enregistrés
+          </div>
+        </article>
+
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon stat-icon--green">◈</span>
+            <span class="stat-caption">ORGANISATION</span>
+          </div>
+
+          <div class="stat-value">
+            <span *ngIf="!loading()">{{ totalCategories }}</span>
+            <span *ngIf="loading()" class="skeleton">—</span>
+          </div>
+
+          <div class="stat-description">
+            Catégories présentes
+          </div>
+        </article>
+
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span class="stat-icon stat-icon--orange">!</span>
+            <span class="stat-caption">DISPONIBILITÉ</span>
+          </div>
+
+          <div class="stat-value">
+            <span *ngIf="!loading()">{{ unavailablePlats }}</span>
+            <span *ngIf="loading()" class="skeleton">—</span>
+          </div>
+
+          <div class="stat-description">
+            Plats indisponibles
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- APERÇU DE LA CARTE -->
+    <section class="menu-preview" id="apercu-carte">
+
+      <div class="section-heading">
+        <div>
+          <span class="section-eyebrow">GESTION DU MENU</span>
+          <h2>Aperçu de votre carte</h2>
+        </div>
+
+        <span class="preview-count">
+          {{ totalPlats }} plats
+        </span>
+      </div>
+
+
+      <div *ngIf="loading()" class="loading-state">
+        Chargement de votre carte...
+      </div>
+
+
+      <div
+        *ngIf="!loading() && !errorMessage() && plats().length === 0"
+        class="empty-state"
+      >
+        <span>🍕</span>
+        <h3>Votre carte est encore vide</h3>
+        <p>Vos plats apparaîtront ici une fois enregistrés.</p>
+      </div>
+
+
+      <div
+        *ngIf="!loading() && !errorMessage() && plats().length > 0"
+        class="preview-table-wrapper"
+      >
+
+        <table class="preview-table">
+
+          <thead>
+          <tr>
+            <th>Nom du plat</th>
+            <th>Catégorie</th>
+            <th>Prix</th>
+            <th>Disponibilité</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr
+            *ngFor="let plat of previewPlats; trackBy: trackByPlatId"
+          >
+            <td>
+              <strong>{{ plat.name }}</strong>
+            </td>
+
+            <td>
+                <span class="category-tag">
+                  {{ getCategoryLabel(plat.type) }}
+                </span>
+            </td>
+
+            <td class="price-cell">
+              {{ plat.prix }} €
+            </td>
+
+            <td>
+                <span
+                  class="availability"
+                  [class.availability--available]="plat.disponible"
+                  [class.availability--unavailable]="!plat.disponible"
+                >
+                  <span class="availability-dot"></span>
+                  {{ plat.disponible ? 'Disponible' : 'Indisponible' }}
+                </span>
+            </td>
+          </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <p class="preview-note" *ngIf="!loading() && plats().length > 5">
+        Affichage des 5 premiers plats de votre carte.
+      </p>
+
+    </section>
+
+
+    <!-- BLOC DISPONIBILITÉ -->
+    <section class="availability-summary" *ngIf="!loading()">
+
+      <div>
+        <span class="section-eyebrow">ÉTAT DE VOTRE CARTE</span>
+        <h2>Vos plats disponibles</h2>
+        <p>
+          {{ availablePlats }} plats sont actuellement proposés à vos clients.
+        </p>
+      </div>
+
+      <div class="availability-number">
+        {{ availablePlats }}
+        <span>/ {{ totalPlats }}</span>
+      </div>
+
+    </section>
+
+    <footer class="admin-footer">
+      <span>Pizza Calabria · Manom</span>
+      <span>Administration</span>
+    </footer>
+
+  </main>
+
+</div>

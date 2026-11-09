@@ -1,0 +1,184 @@
+<div class="management-page">
+
+  <header class="page-header">
+    <div>
+      <a routerLink="/admin/dashboard" class="back-link">
+        ← Retour au tableau de bord
+      </a>
+
+      <span class="page-eyebrow">GESTION DU RESTAURANT</span>
+      <h1>Ma <em>carte</em></h1>
+
+      <p>Gérez les plats proposés à vos clients.</p>
+    </div>
+
+    <button class="add-button" (click)="openCreateForm()">
+      <span>+</span>
+      Ajouter un plat
+    </button>
+  </header>
+
+  <section class="management-stats">
+    <div>
+      <strong>{{ plats().length }}</strong>
+      <span>Plats au total</span>
+    </div>
+
+    <div>
+      <strong>{{ availableCount }}</strong>
+      <span>Disponibles</span>
+    </div>
+
+    <div>
+      <strong>{{ unavailableCount }}</strong>
+      <span>Indisponibles</span>
+    </div>
+  </section>
+
+  <div *ngIf="errorMessage()" class="error-message" role="alert">
+    {{ errorMessage() }}
+    <button type="button" (click)="loadPlats()">Réessayer</button>
+  </div>
+
+  <div class="management-content">
+
+    <aside class="category-sidebar">
+      <span class="category-heading">CATÉGORIES</span>
+
+      <button
+        *ngFor="let category of categories"
+        type="button"
+        [class.active]="selectedCategory() === category.type"
+        (click)="selectCategory(category.type)"
+      >
+        {{ category.label }}
+
+        <span>
+          {{
+            category.type === 'TOUS'
+              ? plats().length
+              : plats().filter(p => p.type === category.type).length
+          }}
+        </span>
+      </button>
+    </aside>
+
+    <section class="plats-section">
+
+      <div class="plats-heading">
+        <div>
+          <span class="section-eyebrow">VOTRE MENU</span>
+          <h2>
+            {{ selectedCategory() === 'TOUS'
+            ? 'Tous les plats'
+            : getCategoryLabel(selectedCategory()) }}
+          </h2>
+        </div>
+
+        <span class="result-count">
+          {{ filteredPlats.length }} résultat(s)
+        </span>
+      </div>
+
+      <div *ngIf="loading()" class="loading-state">
+        Chargement de votre carte...
+      </div>
+
+      <div *ngIf="!loading() && filteredPlats.length === 0"
+           class="empty-state">
+        <span>🍕</span>
+        <h3>Aucun plat dans cette catégorie</h3>
+        <p>Vous pouvez ajouter un nouveau plat à votre carte.</p>
+
+        <button type="button" class="add-button"
+                (click)="openCreateForm()">
+          Ajouter un plat
+        </button>
+      </div>
+
+      <div class="plat-list" *ngIf="!loading() && filteredPlats.length > 0">
+
+        <article
+          class="plat-row"
+          *ngFor="let plat of filteredPlats; trackBy: trackByPlatId"
+        >
+
+          <div class="plat-main">
+            <div class="plat-initial">
+              {{ plat.name.charAt(0).toUpperCase() }}
+            </div>
+
+            <div class="plat-info">
+              <h3>{{ plat.name }}</h3>
+              <p>{{ plat.description }}</p>
+
+              <span class="plat-category">
+                {{ getCategoryLabel(plat.type) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="plat-prices">
+            <strong>{{ plat.prix | number:'1.2-2':'fr-FR' }} €</strong>
+
+            <span *ngIf="plat.type === 'PIZZA' && plat.prixFamilial">
+              Familiale :
+              {{ plat.prixFamilial | number:'1.2-2':'fr-FR' }} €
+            </span>
+          </div>
+
+          <div class="plat-status">
+            <button
+              type="button"
+              class="availability-toggle"
+              [class.unavailable]="!plat.disponible"
+              [disabled]="savingAvailability() === plat.id"
+              (click)="toggleAvailability(plat)"
+              [attr.aria-label]="plat.disponible
+                ? 'Rendre indisponible'
+                : 'Rendre disponible'"
+            >
+              <span></span>
+            </button>
+
+            <span [class.status-unavailable]="!plat.disponible">
+              {{ plat.disponible ? 'Disponible' : 'Indisponible' }}
+            </span>
+          </div>
+
+          <div class="plat-actions">
+            <button
+              type="button"
+              title="Modifier"
+              aria-label="Modifier le plat"
+              (click)="openEditForm(plat)"
+            >
+              ✎
+            </button>
+
+            <button
+              type="button"
+              title="Supprimer"
+              aria-label="Supprimer le plat"
+              class="delete-button"
+              (click)="deletePlat(plat)"
+            >
+              ×
+            </button>
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+  </div>
+
+  <app-plat-form
+    *ngIf="showForm()"
+    [plat]="selectedPlat()"
+    (saved)="onPlatSaved()"
+    (closed)="closeForm()"
+  ></app-plat-form>
+
+</div>
