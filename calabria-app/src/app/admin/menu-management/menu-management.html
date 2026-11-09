@@ -43,6 +43,15 @@
   <div class="management-content">
 
     <aside class="category-sidebar">
+      <button
+        type="button"
+        class="unavailable-category"
+        [class.active]="selectedCategory() === 'INDISPONIBLES'"
+        (click)="selectCategory('INDISPONIBLES')"
+      >
+        <span>Indisponibles</span>
+        <span class="unavailable-count">{{ unavailableCount }}</span>
+      </button>
       <span class="category-heading">CATÉGORIES</span>
 
       <button

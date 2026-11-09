@@ -73,13 +73,17 @@ export class MenuManagement implements OnInit {
   }
 
   get filteredPlats(): Plat[] {
-    const category = this.selectedCategory();
+    if (this.selectedCategory() === 'INDISPONIBLES') {
+      return this.plats().filter(plat => !plat.disponible);
+    }
 
-    if (category === 'TOUS') {
+    if (this.selectedCategory() === 'TOUS') {
       return this.plats();
     }
 
-    return this.plats().filter(plat => plat.type === category);
+    return this.plats().filter(
+      plat => plat.type === this.selectedCategory()
+    );
   }
 
   get availableCount(): number {
